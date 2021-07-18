@@ -2,3 +2,6 @@
 
 ## features
 It includes article posting, editing, delete and also user inserting, editing and delete
+
+### update
+Added tags into articles along with filtering articles using tags
