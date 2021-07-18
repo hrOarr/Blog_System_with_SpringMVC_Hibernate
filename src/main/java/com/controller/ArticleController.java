@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model.Article;
 import com.model.ArticleDTO;
 import com.model.User;
 import com.service.ArticleService;
+import com.service.TagService;
 import com.service.UserService;
 
 @Controller
@@ -26,20 +28,24 @@ public class ArticleController {
 	
 	private ArticleService articleService;
 	private UserService userService;
+	private TagService tagService;
 	
 	@Autowired
-	public ArticleController(ArticleService articleService, UserService userService) {
+	public ArticleController(ArticleService articleService, UserService userService, TagService tagService) {
 		this.articleService = articleService;
 		this.userService = userService;
+		this.tagService = tagService;
 	}
 	
 	@GetMapping()
 	public String allArticles(Model model) {
 		List<Article> articles = articleService.getArticleList();
 		model.addAttribute("articles", articles);
+		model.addAttribute("tags", tagService.allTags());
 		return "articles/article_list";
 	}
 	
+	// get single article
 	@GetMapping("/{id}")
 	public String showArticle(@PathVariable("id") int id, Model model) {
 		try {
@@ -53,6 +59,7 @@ public class ArticleController {
 		}
 	}
 	
+	// get article form
 	@GetMapping("/add")
 	public String addArticle(Model model) {
 		model.addAttribute("type", "add");
@@ -70,6 +77,7 @@ public class ArticleController {
 		return userService.allUsers();
 	}
 	
+	// add article
 	@PostMapping("/add")
 	public String addArticle(@Valid @ModelAttribute("articleDTO") ArticleDTO articleDTO, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -80,6 +88,7 @@ public class ArticleController {
 		return "redirect:/articles";
 	}
 	
+	// get edit article form
 	@GetMapping("/edit/{id}")
 	public String editArticle(@PathVariable("id") int id, Model model) {
 		try {
@@ -93,6 +102,7 @@ public class ArticleController {
 		}
 	}
 	
+	// edit article
 	@PostMapping("/edit")
 	public String editArticle(@ModelAttribute("articleDTO") ArticleDTO articleDTO, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -101,5 +111,14 @@ public class ArticleController {
 		}
 		articleService.updateArticle(articleDTO);
 		return "redirect:/articles";
+	}
+	
+	// get articles by tag
+	@GetMapping("/byTag")
+	public String getArticlesByTag(@RequestParam("tag") String name, Model model) {
+		model.addAttribute("articles", articleService.getArticlesByTagName(name));
+		model.addAttribute("tags", tagService.allTags());
+		model.addAttribute("tag_name", name);
+		return "articles/article_list_by_tags";
 	}
 }

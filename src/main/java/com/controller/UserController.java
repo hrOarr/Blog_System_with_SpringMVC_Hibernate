@@ -28,6 +28,7 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	// get user-list
 	@GetMapping()
 	public String allUsers(Model model) {
 		List<User> users = userService.allUsers();
@@ -35,6 +36,7 @@ public class UserController {
 		return "users/user_list";
 	}
 	
+	// get user form
 	@GetMapping("/add")
 	public String addUser(Model model) {
 		model.addAttribute("type", "add");
@@ -46,6 +48,7 @@ public class UserController {
 		return new User();
 	}
 	
+	// add user
 	@PostMapping("/add")
 	public String addUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -57,6 +60,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
+	// get edit user form
 	@GetMapping("/update/{id}")
 	public String updateUser(@PathVariable("id") int id, Model model) {
 		User user = userService.getUser(id);
@@ -65,6 +69,7 @@ public class UserController {
 		return "users/show_form";
 	}
 	
+	// edit user
 	@PostMapping("/update")
 	public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -75,6 +80,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
+	// delete user
 	@PostMapping("/delete/{id}")
 	public String deleteUser(@PathVariable("id") int id) {
 		userService.deleteUser(id);

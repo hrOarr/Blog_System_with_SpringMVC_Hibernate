@@ -51,6 +51,11 @@ public class ArticleServiceImp implements ArticleService {
 		articleDao.updateArticle(article);
 	}
 	
+	@Override
+	public List<Article> getArticlesByTagName(String name) {
+		return articleDao.getArticlesByTagName(name);
+	}
+	
 	public Article articleDTOtoArticle(ArticleDTO articleDTO) {
 		Article article = new Article();
 		// set id
@@ -61,9 +66,8 @@ public class ArticleServiceImp implements ArticleService {
 		String taglist = articleDTO.getTags();
 		List<String> tags = Arrays.asList(taglist.split(","));
 		for(String tg:tags) {
-			if(tg.isEmpty()||tg.isBlank())continue;
-			String upper = tg.toUpperCase();
-			System.out.println(tg);
+			String upper = tg.trim().toUpperCase();
+			if(upper.isEmpty()||upper.isBlank())continue;
 			Tag tag = tagDao.getTagByName(upper);
 			if(tag == null) {
 				tag = new Tag(upper);
@@ -100,5 +104,6 @@ public class ArticleServiceImp implements ArticleService {
 		articleDTO.setUser_id(article.getUser().getId());
 		return articleDTO;
 	}
+
 
 }

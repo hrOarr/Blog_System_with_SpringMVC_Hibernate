@@ -10,5 +10,6 @@ public interface ArticleService {
 	public Article getArticle(int id);
 	public List<Article> getArticleList();
 	public void updateArticle(ArticleDTO articleDTO);
+	public List<Article> getArticlesByTagName(String name);
 	public ArticleDTO articleToArticleDTO(Article article);
 }

@@ -2,6 +2,7 @@ package com.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -49,7 +50,7 @@ public class ArticleDaoImp implements ArticleDao {
 	@Transactional
 	public Article getArticle(int id) {
 		Session session = sessionFactory.getCurrentSession();
-		return (Article) session.get(Article.class, id);
+		return session.get(Article.class, id);
 	}
 
 	@Override
@@ -57,6 +58,17 @@ public class ArticleDaoImp implements ArticleDao {
 	public void updateArticle(Article article) {
 		Session session = sessionFactory.getCurrentSession();
 		session.update(article);
+	}
+
+	@Override
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public List<Article> getArticlesByTagName(String name) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("SELECT a FROM Article a INNER JOIN a.tags t WHERE t.name=:name");
+		query.setParameter("name", name);
+		List<Article> articles = query.getResultList();
+		return articles;
 	}
 
 }

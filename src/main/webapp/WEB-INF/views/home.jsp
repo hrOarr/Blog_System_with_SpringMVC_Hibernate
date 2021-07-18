@@ -16,20 +16,22 @@
 </head>
 <body>
 	<div class="container bg-blue-300">
-		<div
-			class="flex md:flex-row justify-center pt-20">
-			<div>
+	
+		<div class="flex flex-col md:flex-row justify-center pt-16 md:pl-0 pl-10">
+			<div class="flex p-2">
 				<a href="<%=request.getContextPath()%>/articles/add">
 				  <button class="bg-blue-600 px-2 py-2 hover:bg-blue-700 focus:outline-none text-white rounded-sm">Add New Article</button>
 				</a>
 			</div>
-			<div class="pl-4">
+			<div class="flex p-2">
 				<a href="<%=request.getContextPath()%>/users">
 				  <button class="bg-purple-600 px-2 py-2 hover:bg-purple-700 focus:outline-none text-white rounded-sm">Show Users</button>
 				</a>
 			</div>
 		</div>
+		
 		<div class="flex flex-col md:flex-row pl-10 pt-10 pr-10 pb-20">
+		  <!-- show all articles -->
 		   <div class="flex w-full md:w-5/6">
 			   <c:choose>
 				 <c:when test="${not empty articles}">
@@ -44,7 +46,7 @@
 							 <div class="mb-3 mt-2">
 							   <span class="italic font-bold underline">Tags: </span>
 							   <c:forEach var="tag" items="${article.getTags()}">
-							     <span><button class="bg-green-300 px-1"><c:out value="${tag.getName()}" /></button></span>
+							     <a href="<%=request.getContextPath()%>/articles/byTag?tag=${tag.getName()}"><button class="bg-green-300 px-1"><c:out value="${tag.getName()}" /></button></a>
 							   </c:forEach>
 							 </div>
 							 <p class="pt-2">${article.body}</p>
@@ -52,18 +54,23 @@
 					 </c:forEach>
 				 </c:when>
 				 <c:otherwise>
-					<h4 class="text-center">No Article yet.</h4>
+					<h4 class="text-center mt-3">No Article yet.</h4>
 				 </c:otherwise>
 			    </c:choose>
 		  </div>
+		  
 		  <!-- right sidebar (tag-list) -->
-		  <div class="flex flex-col w-full md:w-1/6 md:ml-2 mt-3 bg-white shadow rounded-lg p-2">
+		  <div class="flex flex-col w-full h-full md:w-1/6 md:ml-2 mt-3 bg-white shadow rounded-lg pl-2 pr-2 pt-2 pb-4">
 			  <div class="text-xl font-medium text-center">All Tags</div>
-			  <div class="pt-1">
+			  <div class="pt-2">
 				  <c:forEach var="tag" items="${tags}">
-				    <a href="#"><button class="bg-indigo-400 text-white shadow p-1"><c:out value="${tag.getName()}" /></button></a>
+				    <a href="<%=request.getContextPath()%>/articles/byTag?tag=${tag.getName()}"><button class="bg-indigo-400 text-white shadow p-1"><c:out value="${tag.getName()}" /></button></a>
 				  </c:forEach>
 			  </div>
+			  
+			  <c:if test="${empty tags}">
+			    <div>No tag yet</div>
+			  </c:if>
 		  </div>
 	  </div>
 	</div>
