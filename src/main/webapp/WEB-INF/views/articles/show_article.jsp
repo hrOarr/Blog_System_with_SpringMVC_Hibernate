@@ -14,23 +14,34 @@
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
+   
+    <%
+    
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Expires", "0");
+  
+    %>
+   
    <div class="container bg-blue-300">
-      <div class="flex md:flex-row flex-col md:justify-center justify-center pt-20">
-        <div>
-         <a href="<%=request.getContextPath()%>/articles/add"><button class="bg-blue-600 px-2 py-2 hover:bg-blue-700 focus:outline-none text-white rounded-sm">Add New Article</button></a>
-        </div>
-        <div class="pl-4">
-         <a href="<%=request.getContextPath()%>/users"><button class="bg-purple-600 px-2 py-2 hover:bg-purple-700 focus:outline-none text-white rounded-sm">Show Users</button></a>
-        </div>
-      </div>
+      <!-- include header section -->
+      <jsp:include page="../helpers/header.jsp" />
+	    <!-- add article button -->
+	    <div class="flex md:flex-row flex-col md:justify-center justify-center pt-2">
+	      <div class="p-2">
+	       <a href="<%=request.getContextPath()%>/articles/add"><button class="bg-blue-600 px-2 py-2 hover:bg-blue-700 focus:outline-none text-white rounded-sm">Add New Article</button></a>
+	      </div>
+	    </div>
       
-      <div class="row pl-20 pt-10 pr-20 pb-20">
-        
-         <div class="justify-start">
+      <!-- edit article button -->
+      <div class="row pl-10 pt-2 pr-10 pb-20">
+        <c:if test="${sessionScope.current_user.getId()==article.user.getId()}">
+          <div class="justify-start">
            <div>
              <a href="<%=request.getContextPath()%>/articles/edit/${article.id}"><button class="bg-blue-500 px-2 py-2 hover:bg-blue-700 focus:outline-none text-white rounded-sm">Edit Article</button></a>
            </div>
-         </div>
+          </div>
+        </c:if>
         
         <div class="py-4 px-8 mt-3 bg-white w-full justify-center shadow-lg rounded-lg">
            <h2 class="text-4xl"><a href="<%=request.getContextPath()%>/articles/${article.id}" class="no-underline">${article.title}</a></h2>

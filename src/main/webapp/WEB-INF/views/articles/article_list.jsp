@@ -16,23 +16,21 @@
 </head>
 <body>
 	<div class="container bg-blue-300">
-	
-		<div class="flex flex-col md:flex-row justify-center pt-16 md:pl-0 pl-10">
+	    <!-- include header section -->
+	    <jsp:include page="../helpers/header.jsp" />
+	    
+	    <!-- add article button -->
+		<div class="flex flex-col md:flex-row justify-center pt-2 md:pl-0 pl-10">
 			<div class="flex p-2">
 				<a href="<%=request.getContextPath()%>/articles/add">
 				  <button class="bg-blue-600 px-2 py-2 hover:bg-blue-700 focus:outline-none text-white rounded-sm">Add New Article</button>
 				</a>
 			</div>
-			<div class="flex p-2">
-				<a href="<%=request.getContextPath()%>/users">
-				  <button class="bg-purple-600 px-2 py-2 hover:bg-purple-700 focus:outline-none text-white rounded-sm">Show Users</button>
-				</a>
-			</div>
 		</div>
 		
-		<div class="flex flex-col md:flex-row pl-10 pt-10 pr-10 pb-20">
+		<div class="flex flex-col md:flex-row pl-10 pt-2 pr-10 pb-20">
 		  <!-- show all articles -->
-		   <div class="flex w-full md:w-5/6">
+		   <div class="flex flex-col w-full md:w-5/6">
 			   <c:choose>
 				 <c:when test="${not empty articles}">
 					 <c:forEach var="article" items="${articles}">
@@ -64,7 +62,7 @@
 			  <div class="text-xl font-medium text-center">All Tags</div>
 			  <div class="pt-2">
 				  <c:forEach var="tag" items="${tags}">
-				    <a href="<%=request.getContextPath()%>/articles/byTag?tag=${tag.getName()}"><button class="bg-indigo-400 text-white shadow p-1"><c:out value="${tag.getName()}" /></button></a>
+				    <a href="<%=request.getContextPath()%>/articles/byTag?tag=${tag.getName()}"><button class="bg-indigo-400 text-white shadow p-1 m-1"><c:out value="${tag.getName()}" /></button></a>
 				  </c:forEach>
 			  </div>
 			  

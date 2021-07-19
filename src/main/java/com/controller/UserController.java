@@ -63,7 +63,7 @@ public class UserController {
 	// get edit user form
 	@GetMapping("/update/{id}")
 	public String updateUser(@PathVariable("id") int id, Model model) {
-		User user = userService.getUser(id);
+		User user = userService.getUserById(id);
 		model.addAttribute("user", user);
 		model.addAttribute("type", "update");
 		return "users/show_form";

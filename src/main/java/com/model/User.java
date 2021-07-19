@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,19 +33,20 @@ public class User {
 	@Column(name = "email", nullable = false)
 	private String email;
 	
-	@NotEmpty(message = "Country can not be Empty")
-	@Column(name = "country", nullable = false)
-	private String country;
+	@NotEmpty(message = "Password can not be Empty")
+	@Size(min = 5, max = 55, message = "Password must be between 5 and 55 characters")
+	@Column(name = "password", nullable = false)
+	private String password;
 	
 	@OneToMany(mappedBy = "user")
 	private List<Article> articles = new ArrayList<Article>();
 	
 	public User() {}
-	public User(int id, String name, String email, String country, List<Article> articles) {
+	public User(int id, String name, String email, String password, List<Article> articles) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.country = country;
+		this.password = password;
 		this.articles = articles;
 	}
 	
@@ -68,11 +68,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getCountry() {
-		return country;
+	public String getPassword() {
+		return password;
 	}
-	public void setCountry(String country) {
-		this.country = country;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public List<Article> getArticles() {
 		return articles;

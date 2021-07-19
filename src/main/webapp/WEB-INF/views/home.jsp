@@ -8,7 +8,7 @@
 <title>Home | Blog System</title>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
@@ -16,23 +16,20 @@
 </head>
 <body>
 	<div class="container bg-blue-300">
-	
-		<div class="flex flex-col md:flex-row justify-center pt-16 md:pl-0 pl-10">
+	   <jsp:include page="helpers/header.jsp" />
+		<div class="flex flex-col md:flex-row justify-center pt-2 md:pl-0 pl-10">
 			<div class="flex p-2">
 				<a href="<%=request.getContextPath()%>/articles/add">
 				  <button class="bg-blue-600 px-2 py-2 hover:bg-blue-700 focus:outline-none text-white rounded-sm">Add New Article</button>
 				</a>
 			</div>
-			<div class="flex p-2">
-				<a href="<%=request.getContextPath()%>/users">
-				  <button class="bg-purple-600 px-2 py-2 hover:bg-purple-700 focus:outline-none text-white rounded-sm">Show Users</button>
-				</a>
-			</div>
 		</div>
 		
-		<div class="flex flex-col md:flex-row pl-10 pt-10 pr-10 pb-20">
+		<c:out value="${user_test}" />
+		
+		<div class="flex flex-col md:flex-row pl-10 pt-2 pr-10 pb-20">
 		  <!-- show all articles -->
-		   <div class="flex w-full md:w-5/6">
+		   <div class="flex flex-col w-full md:w-5/6">
 			   <c:choose>
 				 <c:when test="${not empty articles}">
 					 <c:forEach var="article" items="${articles}">
@@ -64,7 +61,7 @@
 			  <div class="text-xl font-medium text-center">All Tags</div>
 			  <div class="pt-2">
 				  <c:forEach var="tag" items="${tags}">
-				    <a href="<%=request.getContextPath()%>/articles/byTag?tag=${tag.getName()}"><button class="bg-indigo-400 text-white shadow p-1"><c:out value="${tag.getName()}" /></button></a>
+				    <a href="<%=request.getContextPath()%>/articles/byTag?tag=${tag.getName()}"><button class="bg-indigo-400 text-white shadow p-1 m-1"><c:out value="${tag.getName()}" /></button></a>
 				  </c:forEach>
 			  </div>
 			  

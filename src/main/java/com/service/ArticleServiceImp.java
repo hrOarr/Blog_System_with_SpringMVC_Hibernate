@@ -13,8 +13,6 @@ import com.model.Article;
 import com.model.ArticleDTO;
 import com.model.Tag;
 
-import net.bytebuddy.agent.builder.AgentBuilder.InitializationStrategy.SelfInjection.Split;
-
 @Service
 public class ArticleServiceImp implements ArticleService {
 	
@@ -77,7 +75,7 @@ public class ArticleServiceImp implements ArticleService {
 		// set body
 		article.setBody(articleDTO.getBody());
 		// set user
-		article.setUser(userDao.getUser(articleDTO.getUser_id()));
+		article.setUser(userDao.getUserById(articleDTO.getUser_id()));
 		return article;
 	}
 	

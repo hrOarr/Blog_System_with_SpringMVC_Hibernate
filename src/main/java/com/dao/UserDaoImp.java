@@ -2,10 +2,7 @@ package com.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -34,21 +31,32 @@ public class UserDaoImp implements UserDao {
 
 	@Override
 	@Transactional
-	public User getUser(int id) {
+	public User getUserById(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(User.class, id);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public User getUserByEmail(String email) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM User WHERE email=:email");
+		query.setParameter("email", email);
+		List<User> users = query.getResultList();
+		if(users==null || users.isEmpty()) {
+			return null;
+		}
+		return users.get(0);
+	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<User> allUsers() {
 		Session session = sessionFactory.getCurrentSession();
-		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<User> cq = cb.createQuery(User.class);
-		Root<User> root = cq.from(User.class);
-		cq.select(root);
-		TypedQuery<User> allQuery = session.createQuery(cq);
-		return allQuery.getResultList();
+		Query query = session.createQuery("FROM User");
+		return query.getResultList();
 	}
 
 	@Override
