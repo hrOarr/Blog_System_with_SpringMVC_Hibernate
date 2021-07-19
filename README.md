@@ -5,3 +5,6 @@ It includes article posting, editing, delete and also user inserting, editing an
 
 ### update
 Added tags into articles along with filtering articles using tags
+
+### update2
+Added auth feature along with header section
