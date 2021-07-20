@@ -15,6 +15,7 @@
 
 </head>
 <body>
+    
 	<div class="container bg-blue-300">
 	   <jsp:include page="helpers/header.jsp" />
 		<div class="flex flex-col md:flex-row justify-center pt-2 md:pl-0 pl-10">

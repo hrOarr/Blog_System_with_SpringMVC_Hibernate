@@ -35,7 +35,7 @@
       
       <!-- edit article button -->
       <div class="row pl-10 pt-2 pr-10 pb-20">
-        <c:if test="${sessionScope.current_user.getId()==article.user.getId()}">
+        <c:if test="${current_user.getId()==article.user.getId()}">
           <div class="justify-start">
            <div>
              <a href="<%=request.getContextPath()%>/articles/edit/${article.id}"><button class="bg-blue-500 px-2 py-2 hover:bg-blue-700 focus:outline-none text-white rounded-sm">Edit Article</button></a>

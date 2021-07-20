@@ -68,6 +68,7 @@ public class ArticleDaoImp implements ArticleDao {
 		Query query = session.createQuery("SELECT a FROM Article a INNER JOIN a.tags t WHERE t.name=:name");
 		query.setParameter("name", name);
 		List<Article> articles = query.getResultList();
+		System.out.println(articles);
 		return articles;
 	}
 

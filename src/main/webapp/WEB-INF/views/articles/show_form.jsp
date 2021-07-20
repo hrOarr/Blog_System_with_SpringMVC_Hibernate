@@ -38,7 +38,7 @@
      <jsp:include page="../helpers/header.jsp" />
      <div class="row justify-center p-20">
        
-       <c:if test="${type=='edit' && current_user.getId()!=article.user.getId()}">
+       <c:if test="${type=='edit' && current_user.getId()!=articleDTO.getUser_id()}">
          <c:redirect url="/" />
        </c:if>
        

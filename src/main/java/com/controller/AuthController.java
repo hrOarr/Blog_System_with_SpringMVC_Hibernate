@@ -49,7 +49,6 @@ public class AuthController {
 			model.addAttribute("errors", "Password is incorrect");
 			return "auth/login_form";
 		}
-		System.out.println("Login.....");
 		session.setAttribute("current_user", obj);
 		return "redirect:/";
 	}
@@ -61,11 +60,9 @@ public class AuthController {
 	
 	@PostMapping("/register")
 	public String submitRegister(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session, Model model) {
-		System.out.println("Begin...");
 		if(result.hasErrors()) {
 			return "auth/register_form";
 		}
-		System.out.println("Second...");
 		// check if already exist or not
 		User obj = userService.getUserByEmail(user.getEmail());
 		if(obj!=null) {
