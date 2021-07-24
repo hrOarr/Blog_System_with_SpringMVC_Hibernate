@@ -35,15 +35,18 @@ public class ArticleDaoImp implements ArticleDao {
 
 	@Override
 	@Transactional
+	@SuppressWarnings("unchecked")
 	public List<Article> getArticleList() {
 		Session session = sessionFactory.getCurrentSession();
-		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<Article> cq = cb.createQuery(Article.class);
-		Root<Article> root = cq.from(Article.class);
-		cq.select(root);
-		
-		TypedQuery<Article> allQuery = session.createQuery(cq);
-		return allQuery.getResultList();
+//		CriteriaBuilder cb = session.getCriteriaBuilder();
+//		CriteriaQuery<Article> cq = cb.createQuery(Article.class);
+//		Root<Article> root = cq.from(Article.class);
+//		cq.select(root);
+//		
+//		TypedQuery<Article> allQuery = session.createQuery(cq);
+		Query query = session.createQuery("FROM Article");
+		List<Article> articles = query.getResultList();
+		return articles;
 	}
 
 	@Override
@@ -68,8 +71,15 @@ public class ArticleDaoImp implements ArticleDao {
 		Query query = session.createQuery("SELECT a FROM Article a INNER JOIN a.tags t WHERE t.name=:name");
 		query.setParameter("name", name);
 		List<Article> articles = query.getResultList();
-		System.out.println(articles);
 		return articles;
+	}
+
+	@Override
+	@Transactional
+	public void deleteArticle(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		Article article = (Article) session.get(Article.class, id);
+		session.delete(article);
 	}
 
 }

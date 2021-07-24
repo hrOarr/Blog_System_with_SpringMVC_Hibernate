@@ -34,7 +34,7 @@ public class Article {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "article_tag", joinColumns = {@JoinColumn(name="article_id")},
 	inverseJoinColumns = {@JoinColumn(name="tag_id")})
 	private List<Tag> tags = new ArrayList<Tag>();

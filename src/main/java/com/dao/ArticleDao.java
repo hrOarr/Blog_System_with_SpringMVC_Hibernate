@@ -9,5 +9,6 @@ public interface ArticleDao {
 	public Article getArticle(int id);
 	public List<Article> getArticleList();
 	public void updateArticle(Article article);
+	public void deleteArticle(int id);
 	public List<Article> getArticlesByTagName(String name);
 }

@@ -49,8 +49,8 @@ public class ArticleController {
 	@GetMapping("/{id}")
 	public String showArticle(@PathVariable("id") int id, Model model) {
 		try {
+			System.out.println(id);
 			Article article = articleService.getArticle(id);
-			System.out.println(article);
 			model.addAttribute("article", article);
 			return "articles/show_article";
 		} catch (Exception e) {
@@ -120,5 +120,11 @@ public class ArticleController {
 		model.addAttribute("tags", tagService.allTags());
 		model.addAttribute("tag_name", name);
 		return "articles/article_list_by_tags";
+	}
+	
+	@PostMapping("/delete/{id}")
+	public String deleteArticle(@PathVariable("id") int id, Model model) {
+		articleService.deleteArticle(id);
+		return "redirect:/articles";
 	}
 }

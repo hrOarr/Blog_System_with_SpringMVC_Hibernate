@@ -103,5 +103,10 @@ public class ArticleServiceImp implements ArticleService {
 		return articleDTO;
 	}
 
+	@Override
+	public void deleteArticle(int id) {
+		articleDao.deleteArticle(id);
+	}
+
 
 }

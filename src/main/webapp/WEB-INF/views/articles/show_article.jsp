@@ -36,9 +36,14 @@
       <!-- edit article button -->
       <div class="row pl-10 pt-2 pr-10 pb-20">
         <c:if test="${current_user.getId()==article.user.getId()}">
-          <div class="justify-start">
+          <div class="flex flex-row justify-start">
            <div>
              <a href="<%=request.getContextPath()%>/articles/edit/${article.id}"><button class="bg-blue-500 px-2 py-2 hover:bg-blue-700 focus:outline-none text-white rounded-sm">Edit Article</button></a>
+           </div>
+           <div>
+             <form action="<%=request.getContextPath()%>/articles/delete/${article.id}" method="POST">
+        	   <button onclick="return confirm('Do you really want to delete?')" class="bg-red-400 px-2 py-2 ml-2 hover:bg-red-500 focus:outline-none text-white rounded-sm">Delete Article</button>
+        	 </form>
            </div>
           </div>
         </c:if>
