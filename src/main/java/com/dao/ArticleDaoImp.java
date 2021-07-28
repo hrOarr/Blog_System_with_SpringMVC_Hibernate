@@ -6,6 +6,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.model.Article;
+import com.model.Tag;
 
 @Repository
 public class ArticleDaoImp implements ArticleDao {
@@ -68,10 +72,22 @@ public class ArticleDaoImp implements ArticleDao {
 	@SuppressWarnings("unchecked")
 	public List<Article> getArticlesByTagName(String name) {
 		Session session = sessionFactory.getCurrentSession();
+		
+//		CriteriaBuilder cb = session.getCriteriaBuilder();
+//		CriteriaQuery<Article> cq = cb.createQuery(Article.class);
+//		Root<Article> articles = cq.from(Article.class);
+//		Join<Article, Tag> tags = articles.join("tags", JoinType.INNER);
+//		
+//		Predicate[] predicates = new Predicate[1];
+//		predicates[0] = cb.equal(tags.get("name"), name);
+//		
+//		cq.select(articles).where(predicates);
+//		TypedQuery<Article> query = session.createQuery(cq);
+		
 		Query query = session.createQuery("SELECT a FROM Article a INNER JOIN a.tags t WHERE t.name=:name");
 		query.setParameter("name", name);
-		List<Article> articles = query.getResultList();
-		return articles;
+		List<Article> article = query.getResultList();
+		return article;
 	}
 
 	@Override
